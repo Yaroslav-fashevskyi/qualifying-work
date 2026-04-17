@@ -164,11 +164,10 @@ onMounted(async () => {
   <div class="page-stack">
     <section class="hero panel panel--hero">
       <div class="hero__copy">
-        <p class="eyebrow">Frontend / Nuxt</p>
-        <h1>IP, domain and ASN lookup without the server-rendered UI layer</h1>
+        <p class="eyebrow">lookup</p>
+        <h1>IP, domain and ASN lookup</h1>
         <p class="hero__text">
-          This client talks directly to the FastAPI backend and keeps lookup, history and dashboard
-          concerns on the frontend side.
+          Enter ipv4/ipv6 / domain
         </p>
       </div>
 

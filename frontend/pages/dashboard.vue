@@ -53,9 +53,9 @@ onMounted(loadDashboard)
     <section class="hero panel panel--hero">
       <div class="hero__copy">
         <p class="eyebrow">Dashboard</p>
-        <h1>Operational view over stored lookups and runtime counters</h1>
+        <h1>Dashboard</h1>
         <p class="hero__text">
-          The dashboard uses the same backend API as the lookup page and stays fully client-driven.
+          Dashboard
         </p>
       </div>
 
