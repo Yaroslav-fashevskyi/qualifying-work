@@ -71,7 +71,6 @@ api_endpoints.configure(
     rate_limiter=rate_limiter,
     db_path=DB_PATH,
 )
-
 app.include_router(api_endpoints.router)
 
 

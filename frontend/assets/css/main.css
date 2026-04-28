@@ -366,6 +366,7 @@ input {
   border-radius: 20px;
   border: 1px solid rgba(247, 244, 234, 0.06);
   background: rgba(247, 244, 234, 0.025);
+  color: var(--text);
 }
 
 .history-card:hover {
