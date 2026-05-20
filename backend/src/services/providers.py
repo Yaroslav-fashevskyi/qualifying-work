@@ -77,8 +77,13 @@ class ExternalProviders:
     MAX_HTML_CHARS = 250_000
     MAX_JS_CHARS = 180_000
 
-    def __init__(self, timeout: float = 5.0) -> None:
-        self._timeout = timeout
+    def __init__(self, timeout: float | None = None) -> None:
+        if timeout is None:
+            try:
+                timeout = float(os.getenv("PROVIDER_TIMEOUT_SEC", "2.0"))
+            except ValueError:
+                timeout = 2.0
+        self._timeout = max(0.5, timeout)
         self._headers = {"User-Agent": "ip-intelligence-backend/1.0"}
         self._wordlist_entries = self._load_optional_wordlist()
 
@@ -446,6 +451,60 @@ class ExternalProviders:
             if isinstance(response, dict) and response:
                 return response
         return {}
+
+
+    async def fetch_asn_overview(self, asn: int) -> Optional[Dict[str, Any]]:
+        url = "https://stat.ripe.net/data/as-overview/data.json"
+        async with httpx.AsyncClient(timeout=self._timeout, headers=self._headers) as client:
+            response = await client.get(url, params={"resource": f"AS{asn}"})
+            if not response.is_success:
+                return None
+            payload = response.json()
+
+        data = payload.get("data") or {}
+        holder = data.get("holder") or data.get("name")
+        return {
+            "asn": asn,
+            "holder": holder,
+            "name": data.get("name") or holder,
+            "country_code": data.get("country_code"),
+            "registry": data.get("rir"),
+            "allocated": data.get("allocated"),
+            "source": "ripe-stat",
+        }
+
+    async def fetch_asn_prefixes(self, asn: int) -> list[str]:
+        url = "https://stat.ripe.net/data/announced-prefixes/data.json"
+        try:
+            async with httpx.AsyncClient(timeout=self._timeout, headers=self._headers) as client:
+                response = await client.get(url, params={"resource": f"AS{asn}"})
+                if not response.is_success:
+                    return []
+                payload = response.json()
+        except Exception:
+            return []
+
+        prefixes = []
+        for item in (payload.get("data") or {}).get("prefixes") or []:
+            prefix = item.get("prefix") if isinstance(item, dict) else None
+            if prefix:
+                prefixes.append(str(prefix))
+        return self._dedupe(prefixes)
+
+    async def asn_profile(self, asn: int) -> Dict[str, Any]:
+        overview, prefixes = await asyncio.gather(
+            self.fetch_asn_overview(asn),
+            self.fetch_asn_prefixes(asn),
+            return_exceptions=True,
+        )
+        profile: Dict[str, Any] = {"asn": asn, "prefixes": []}
+        if isinstance(overview, dict):
+            profile.update(overview)
+        else:
+            profile.update({"source": "asn-local", "holder": None, "name": None})
+        if isinstance(prefixes, list):
+            profile["prefixes"] = prefixes[:250]
+        return profile
 
     async def domain_dns_profile(self, domain: str) -> Dict[str, list[str]]:
         record_types = ("A", "AAAA", "CNAME", "MX", "NS", "TXT", "CAA", "SOA")

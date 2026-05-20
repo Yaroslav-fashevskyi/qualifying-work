@@ -29,15 +29,24 @@ class SlidingWindowRateLimiter:
             if not queue:
                 self._hits.pop(key, None)
 
-    def check(self, identifier: str) -> None:
+    def check(self, identifier: str, hits: int = 1) -> None:
         now = self._now()
         cutoff = now - self._window
         queue = self._hits.setdefault(identifier, deque())
         while queue and queue[0] <= cutoff:
             queue.popleft()
-        if len(queue) >= self._max_hits:
+        hits = max(1, hits)
+        if len(queue) + hits > self._max_hits:
             raise RateLimitExceeded
-        queue.append(now)
+        for _ in range(hits):
+            queue.append(now)
         if now >= self._next_sweep:
             self._sweep(cutoff)
             self._next_sweep = now + min(self._window, 120)
+
+    def snapshot(self) -> dict[str, int]:
+        return {
+            "window_seconds": self._window,
+            "max_hits": self._max_hits,
+            "tracked_identifiers": len(self._hits),
+        }

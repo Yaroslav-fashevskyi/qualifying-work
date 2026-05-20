@@ -1,5 +1,6 @@
 import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,19 +17,32 @@ from .services import (
 from .services.providers import ExternalProviders
 
 APP_TITLE = "IP Intelligence Backend"
-DB_PATH = "src/data/app.sqlite"
-CACHE_TTL_SEC = 600
-CACHE_MAX_ENTRIES = 5000
-RATE_LIMIT_WINDOW_SEC = 300
-RATE_LIMIT_MAX = 200
+BASE_DIR = Path(__file__).resolve().parents[1]
+DEFAULT_DB_PATH = BASE_DIR / "src" / "data" / "app.sqlite"
+DB_PATH = os.getenv("APP_DB_PATH", str(DEFAULT_DB_PATH))
 
-os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+
+def _positive_int_env(name: str, default: int) -> int:
+    try:
+        value = int(os.getenv(name, str(default)))
+    except ValueError:
+        return default
+    return value if value > 0 else default
+
+
+CACHE_TTL_SEC = _positive_int_env("CACHE_TTL_SEC", 600)
+CACHE_MAX_ENTRIES = _positive_int_env("CACHE_MAX_ENTRIES", 5000)
+RATE_LIMIT_WINDOW_SEC = _positive_int_env("RATE_LIMIT_WINDOW_SEC", 300)
+RATE_LIMIT_MAX = _positive_int_env("RATE_LIMIT_MAX", 200)
+
+Path(DB_PATH).expanduser().parent.mkdir(parents=True, exist_ok=True)
 
 
 def _cors_allow_origins() -> list[str]:
     raw = os.getenv("CORS_ALLOW_ORIGINS", "*")
     origins = [item.strip() for item in raw.split(",") if item.strip()]
     return origins or ["*"]
+
 
 cache = TTLCache[str, dict](ttl_seconds=CACHE_TTL_SEC, max_entries=CACHE_MAX_ENTRIES)
 history_service = HistoryService(DB_PATH)
@@ -70,6 +84,7 @@ api_endpoints.configure(
     stats_tracker=stats_tracker,
     rate_limiter=rate_limiter,
     db_path=DB_PATH,
+    cache=cache,
 )
 app.include_router(api_endpoints.router)
 

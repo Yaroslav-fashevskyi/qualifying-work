@@ -19,6 +19,18 @@ uvicorn src.app:app --host 127.0.0.1 --port 8000
 
 `GeoLite2-City.mmdb` and `GeoLite2-ASN.mmdb` must exist in `src/data/`.
 
+
+Optional backend runtime overrides:
+
+```bash
+export APP_DB_PATH=/absolute/path/to/app.sqlite
+export RDAP_DB_PATH=/absolute/path/to/rdap.sqlite
+export CACHE_TTL_SEC=600
+export CACHE_MAX_ENTRIES=5000
+export RATE_LIMIT_WINDOW_SEC=300
+export RATE_LIMIT_MAX=200
+```
+
 If the frontend is served from another origin, set CORS explicitly:
 
 ```bash

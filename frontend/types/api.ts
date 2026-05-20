@@ -42,13 +42,31 @@ export interface OriginCandidate {
   notes: string[]
 }
 
+export interface AsnInfo {
+  asn: number
+  holder: string | null
+  name: string | null
+  country_code: string | null
+  registry: string | null
+  allocated: string | null
+  prefixes: string[]
+  source: string | null
+}
+
 export interface LookupResponse {
   query: string
   query_type: string
   domain: string | null
+  asn: number | null
+  asn_info: AsnInfo | null
+  prefix: string | null
   cached: boolean
   ip: string | null
   resolved_ips: string[]
+  ip_version: number | null
+  ip_kind: string | null
+  is_public: boolean | null
+  network_notes: string[]
   country_name: string | null
   country_code: string | null
   region: string | null
@@ -68,9 +86,13 @@ export interface LookupResponse {
   rdap_abuse: string | null
   reverse_dns: string | null
   security: SecurityFlags
+  risk_score: number
+  risk_level: string
+  risk_signals: string[]
   dns: DomainDnsRecords | null
   routing: DomainRouting | null
   origin_candidates: OriginCandidate[]
+  response_time_ms: number | null
   source: string | null
 }
 
@@ -79,7 +101,9 @@ export interface HistoryRecord {
   ts: number
   query: string | null
   query_type: string | null
-  ip: string
+  domain: string | null
+  asn: number | null
+  ip: string | null
   country_code: string | null
   country_name: string | null
   city: string | null
@@ -87,6 +111,9 @@ export interface HistoryRecord {
   org: string | null
   source: string | null
   cached: boolean
+  risk_score: number
+  risk_level: string
+  response_time_ms: number | null
   vpn: boolean
   proxy: boolean
   tor: boolean
@@ -97,13 +124,38 @@ export interface HistoryRecord {
 
 export interface RuntimeStats {
   total_lookups: number
+  cache_hits: number
+  cache_misses: number
+  cache_hit_ratio: number
+  avg_response_ms: number
   by_country: Record<string, number>
+  by_query_type: Record<string, number>
+  security_hits: Record<string, number>
   since: number
 }
 
 export interface StatsResponse {
   runtime: RuntimeStats
   db_by_country: Record<string, number>
+  db_by_query_type: Record<string, number>
+  db_security_hits: Record<string, number>
+  db_cache: Record<string, number>
+  total_history: number
+  latest_ts: number | null
+}
+
+export interface BatchLookupItem {
+  query: string
+  ok: boolean
+  result: LookupResponse | null
+  error: string | null
+}
+
+export interface BatchLookupResponse {
+  total: number
+  ok: number
+  failed: number
+  items: BatchLookupItem[]
 }
 
 export interface MeResponse {

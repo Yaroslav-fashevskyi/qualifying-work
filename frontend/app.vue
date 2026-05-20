@@ -9,8 +9,8 @@ const isActive = (path: string) => route.path === path
   <div class="shell">
     <header class="shell__header">
       <NuxtLink class="brand" to="/">
-        <span class="brand__eyebrow">LeaveAbuse</span>
-        <span class="brand__title">IP Intelligence</span>
+        <span class="brand__eyebrow">IP / Domain / ASN Intelligence</span>
+        <span class="brand__title">Network Lookup</span>
       </NuxtLink>
 
       <nav class="nav">

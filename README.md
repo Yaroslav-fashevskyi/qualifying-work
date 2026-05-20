@@ -2,8 +2,8 @@
 
 Monorepo with two separate applications:
 
-- `backend/`: FastAPI API for IP, domain and ASN enrichment
-- `frontend/`: Nuxt 3 client for lookup, history and dashboard flows
+- `backend/`: FastAPI API 
+- `frontend/`: Nuxt 3 
 
 ## Backend
 
@@ -11,6 +11,18 @@ Monorepo with two separate applications:
 cd backend
 pip install -r requirements.txt
 uvicorn src.app:app --host 127.0.0.1 --port 8000
+```
+
+
+Optional backend runtime overrides:
+
+```bash
+export APP_DB_PATH=/absolute/path/to/app.sqlite
+export RDAP_DB_PATH=/absolute/path/to/rdap.sqlite
+export CACHE_TTL_SEC=600
+export CACHE_MAX_ENTRIES=5000
+export RATE_LIMIT_WINDOW_SEC=300
+export RATE_LIMIT_MAX=200
 ```
 
 Optional CORS override:
@@ -32,16 +44,6 @@ Optional backend override:
 ```bash
 export NUXT_PUBLIC_BACKEND_ORIGIN=http://127.0.0.1:8000
 ```
-
-## Current backend API
-
-- `GET /api/lookup?q=IP_or_domain`
-- `GET /api/me`
-- `GET /api/history?limit=50`
-- `DELETE /api/history`
-- `GET /api/history/export`
-- `GET /api/stats`
-- `GET /api/health`
 
 ## Threat list refresh
 
