@@ -1,0 +1,107 @@
+{
+  "generated_at": "2026-04-02T09:33:20+00:00",
+  "outputs": {
+    "datacenter": {
+      "entries": 41304,
+      "path": "datacenters.txt"
+    },
+    "proxy": {
+      "entries": 300,
+      "path": "proxy.txt"
+    },
+    "threat": {
+      "entries": 18020,
+      "path": "threat.txt"
+    },
+    "tor": {
+      "entries": 10266,
+      "path": "tor.txt"
+    },
+    "vpn": {
+      "entries": 10746,
+      "path": "vpn.txt"
+    }
+  },
+  "sources": {
+    "github:X4BNet/lists_vpn:output/datacenter/ipv4.txt": {
+      "category": "datacenter",
+      "content_etag": "\"584d4102b066375cebcfcff773932baea2b22c36\"",
+      "entries": 41304,
+      "key": "github:X4BNet/lists_vpn:output/datacenter/ipv4.txt",
+      "last_synced_at": "2026-04-02T09:33:03+00:00",
+      "license_etag": null,
+      "license_name": null,
+      "license_spdx_id": null,
+      "license_text_hash": null,
+      "name": "x4b-datacenter-ipv4",
+      "notes": "Proceeding without SPDX because allow_no_license is enabled",
+      "repo_url": "https://github.com/X4BNet/lists_vpn",
+      "source_url": "https://github.com/X4BNet/lists_vpn/blob/main/output/datacenter/ipv4.txt",
+      "status": "updated"
+    },
+    "github:X4BNet/lists_vpn:output/vpn/ipv4.txt": {
+      "category": "vpn",
+      "content_etag": "\"320cbba071b4ddb6791e7998cedf23098d3fb949\"",
+      "entries": 10746,
+      "key": "github:X4BNet/lists_vpn:output/vpn/ipv4.txt",
+      "last_synced_at": "2026-04-02T09:33:03+00:00",
+      "license_etag": null,
+      "license_name": null,
+      "license_spdx_id": null,
+      "license_text_hash": null,
+      "name": "x4b-vpn-ipv4",
+      "notes": "Proceeding without SPDX because allow_no_license is enabled",
+      "repo_url": "https://github.com/X4BNet/lists_vpn",
+      "source_url": "https://github.com/X4BNet/lists_vpn/blob/main/output/vpn/ipv4.txt",
+      "status": "updated"
+    },
+    "github:antoinevastel/avastel-bot-ips-lists:avastel-proxy-bot-ips-blocklist-8days.txt": {
+      "category": "proxy",
+      "content_etag": "\"f36666154e8cac18850994a553b75ef760d322c0\"",
+      "entries": 300,
+      "key": "github:antoinevastel/avastel-bot-ips-lists:avastel-proxy-bot-ips-blocklist-8days.txt",
+      "last_synced_at": "2026-04-02T09:33:03+00:00",
+      "license_etag": "W/\"87eb149fa299183a12bbabed3154114448ad7c15262b9cfbdfcaca812395aaf2\"",
+      "license_name": "MIT License",
+      "license_spdx_id": "MIT",
+      "license_text_hash": "756ab1dca9e18dd06a52ecb2026e4bb9ed02fa84d0cb79d86f36fe6dc526a26a",
+      "name": "avastel-proxy-8days",
+      "notes": null,
+      "repo_url": "https://github.com/antoinevastel/avastel-bot-ips-lists",
+      "source_url": "https://github.com/antoinevastel/avastel-bot-ips-lists/blob/main/avastel-proxy-bot-ips-blocklist-8days.txt",
+      "status": "updated"
+    },
+    "github:stamparm/ipsum:levels/3.txt": {
+      "category": "threat",
+      "content_etag": "\"f67108db30154267c870c7906c240aa0e03d45c5\"",
+      "entries": 18020,
+      "key": "github:stamparm/ipsum:levels/3.txt",
+      "last_synced_at": "2026-04-02T09:33:04+00:00",
+      "license_etag": "W/\"5dbae4e68665508d5293666495e81f4293d8afe8bd7c9d81d097dde9eeda863f\"",
+      "license_name": "The Unlicense",
+      "license_spdx_id": "Unlicense",
+      "license_text_hash": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "name": "ipsum-level-3",
+      "notes": null,
+      "repo_url": "https://github.com/stamparm/ipsum",
+      "source_url": "https://github.com/stamparm/ipsum/blob/main/levels/3.txt",
+      "status": "updated"
+    },
+    "tor:direct": {
+      "category": "tor",
+      "content_etag": null,
+      "entries": 10266,
+      "key": "tor:direct",
+      "last_synced_at": "2026-04-02T09:33:20+00:00",
+      "license_etag": null,
+      "license_name": null,
+      "license_spdx_id": null,
+      "license_text_hash": null,
+      "name": "tor-direct",
+      "notes": null,
+      "repo_url": "https://www.torproject.org/",
+      "source_url": "https://check.torproject.org/torbulkexitlist,https://www.dan.me.uk/torlist/",
+      "status": "updated"
+    }
+  }
+}

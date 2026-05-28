@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+httpx
+geoip2
+aiosqlite
+python-dotenv
+dnspython

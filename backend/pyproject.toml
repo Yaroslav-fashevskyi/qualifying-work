@@ -1,0 +1,33 @@
+[project]
+name = "ip-intelligence-backend"
+version = "0.1.0"
+description = "FastAPI backend for IP, domain, and ASN intelligence."
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.12"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "fastapi (>=0.121.0,<0.122.0)",
+    "uvicorn (>=0.38.0,<0.39.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+    "geoip2 (>=5.1.0,<6.0.0)",
+    "aiosqlite (>=0.21.0,<0.22.0)",
+    "python-dotenv (>=1.2.1,<2.0.0)",
+    "dnspython (>=2.8.0,<3.0.0)",
+]
+
+[dependency-groups]
+dev = ["ruff>=0.14.3,<0.15"]
+
+[tool.uv]
+package = false
+default-groups = "all"
+
+[build-system]
+requires = ["uv_build>=0.8.23,<0.9.0"]
+build-backend = "uv_build"

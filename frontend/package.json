@@ -1,0 +1,19 @@
+{
+  "name": "ip-intelligence-frontend",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.2.18",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "chart.js": "^4.5.1",
+    "leaflet": "^1.9.4",
+    "nuxt": "3.21.2"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.18"
+  }
+}
